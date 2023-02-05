@@ -68,6 +68,7 @@ class CustomUser(AbstractBaseUser):
         if not self.password:
             raise ValueError("Veuillez définir un mot de passe (password)")
 
+        self.set_password(self.password)
         super().save(*args, **kwargs)
 
 
