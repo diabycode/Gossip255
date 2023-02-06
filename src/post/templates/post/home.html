@@ -7,5 +7,13 @@
 <body>
     <h1> Gossip255 </h1>
     <p> Accueil du site. </p>
+    <br>
+    {% for post in posts %}
+        <div style="background-color: lightgray;">
+            <p> {{ post.content }}</p>
+            <h4> {{ post.author }} </h4>
+        </div>
+    {% endfor %}
+
 </body>
 </html>
