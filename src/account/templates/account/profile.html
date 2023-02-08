@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.username }} | Gossip225</title>
+</head>
+<body>
+    <h4>{{ user.username }}</h4>
+    <p> membre depuis {{ user.joindate }} </p>
+    <br>
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post">
+                <p>
+                    <a href="{% url 'post:edit' pk=post.pk %}">modifier</a>
+                    <a href="{% url 'post:delete' pk=post.pk %}" style="color: red;">supprimer</a>
+                </p>
+                {% if post.thumbnail %}
+                    <img src="{{ post.thumbnail.url }}" alt="image lié au post">
+                {% endif %}
+                <p> {{ post.content }}</p>
+                <p> {{ post.create_on }}</p>
+            </div>
+            <p>-------------------------------</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

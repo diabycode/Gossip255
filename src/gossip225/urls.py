@@ -17,7 +17,10 @@ from django.contrib.auth import urls
 from django.contrib import admin
 from django.urls import path, include
 
+from .views import index
+
 urlpatterns = [
+    path('', index, name="index"),
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
     path('post/', include('post.urls')),
