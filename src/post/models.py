@@ -1,3 +1,4 @@
+import django
 from django.db import models
 from django.utils import timezone
 
@@ -5,7 +6,7 @@ from account.models import CustomUser
 
 
 class HashTag(models.Model):
-    name = models.CharField(max_length=50, blank=False)
+    name = models.CharField(max_length=50, blank=False, unique=True)
 
 
 class Post(models.Model):
@@ -19,12 +20,21 @@ class Post(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
         # getting hashtags
+        hashtags = []
         for word in self.content.split(" "):
             if word.startswith("#"):
-                hashtag = HashTag.objects.create(name=word[1:])
-                self.hashtags.set([hashtag])
+                hashtag = HashTag(name=word[1:])
+                hashtags.append(hashtag)
 
-        super().save(force_insert=False, force_update=False, using=None, update_fields=None)
+        if hashtags:
+            for hashtag in hashtags:
+                try:
+                    hashtag.save()
+                except django.db.utils.IntegrityError:
+                    pass
+
+            self.hashtags.set([HashTag.objects.get(name=h.name) for h in hashtags])
 
