@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Créer un post</title>
-</head>
-<body>
+{% extends 'gossip225/base.html' %}
+
+{% block head_content %}
+     <title>Créer un post</title>
+{% endblock %}
+
+{% block body_container %}
     <h1>Créer un nouveau post</h1>
     <form action="#" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Créer">
     </form>
-</body>
-</html>
+{% endblock %}
+
+
+

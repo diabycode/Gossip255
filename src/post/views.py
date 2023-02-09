@@ -10,7 +10,7 @@ from .models import Post
 
 
 class PostHomeView(LoginRequiredMixin, ListView):
-    model = Post
+    queryset = Post.objects.all().order_by("-create_on")
     template_name = "post/home.html"
     context_object_name = "posts"
 

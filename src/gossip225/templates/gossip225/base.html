@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    {% block head_content %}
+        <title>  Gossip225  </title>
+    {% endblock %}
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+        h1 a {
+            text-decoration: none;
+            color: black;
+            flex-shrink: 1;
+        }
+        .header * {
+            margin: 0px;
+            padding: 0px;
+        }
+        .header {
+            background-color: lightgray;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .right {
+            display: flex;
+            justify-content: space-between;
+            min-width: 350px;
+            width: 30%;
+            align-items: center;
+
+        }
+        .right a:hover {
+            text-decoration: underline;
+        }
+        .right h4 a {
+            color: black;
+            font-size: 16px;
+        }
+        .right a {
+            font-size: 13px;
+            color: blue;
+            text-decoration: none;
+        }
+        .right h4 {
+            margin-right: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>
+            <a href="{% url 'post:home' %}"> Gossip225 </a>
+        </h1>
+        <div class="right">
+            User,
+            <h4><a href="{% url 'account:profile' %}"> {{ user.username.upper }} </a></h4>
+            <a href="{% url 'post:create' %}">NOUVEAU POST</a> /
+            <a href="{% url 'account:logout' %}">DECONNEXION</a>
+        </div>
+    </div>
+
+    {% block body_container %}
+
+
+    {% endblock %}
+
+</body>
+</html>

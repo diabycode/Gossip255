@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Modifier un post</title>
-</head>
-<body>
+{% extends 'gossip225/base.html' %}
+
+{% block head_content %}
+     <title>Modifier un post</title>
+{% endblock %}
+
+{% block body_container %}
     <h1>Modifier</h1>
     <form action="#" method="POST">
         {% csrf_token %}
@@ -12,6 +12,5 @@
         <input type="submit" value="Valider">
 
     </form>
+{% endblock %}
 
-</body>
-</html>

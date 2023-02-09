@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Détails</title>
-</head>
-<body>
-  <p> {{ post.content }}</p>
-  <h4> {{ post.author }}</h4>
-</body>
-</html>
+{% extends 'gossip225/base.html' %}
+
+{% block head_content %}
+     <title>Détails</title>
+{% endblock %}
+
+{% block body_container %}
+    <p> {{ post.content }}</p>
+    <h4> {{ post.author }}</h4>
+{% endblock %}
+
