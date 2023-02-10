@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 
 from .models import Post
 
@@ -12,5 +13,4 @@ class PostForm(ModelForm):
             "thumbnail",
             "published",
         )
-
 

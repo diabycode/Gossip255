@@ -12,7 +12,7 @@ class HashTag(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False)
     content = models.TextField(blank=False)
-    thumbnail = models.ImageField(blank=True, null=True)
+    thumbnail = models.ImageField(blank=True, null=True, upload_to="posts_thumb")
     hashtags = models.ManyToManyField(HashTag, blank=True)
     published = models.BooleanField(default=False)
     create_on = models.DateTimeField(default=timezone.now)
