@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block body_container %}
+    {% if post.thumbnail %}
+        <img style="width: 280px; height: 280px; object-fit: cover;" src="{{ post.thumbnail.url }}" alt="Image rattaché">
+    {% endif %}
     <p> {{ post.content }}</p>
     <h4> {{ post.author }}</h4>
 {% endblock %}

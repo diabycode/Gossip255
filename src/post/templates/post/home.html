@@ -11,6 +11,7 @@
                 <img style="width: 280px; height: 280px; object-fit: cover;" src="{{ post.thumbnail.url }}" alt="Image rattaché">
             {% endif %}
             <p> {{ post.content }}</p>
+            <a href="{% url 'post:details' pk=post.pk %}">voir</a>
             <p> {{ post.create_on }} <b>{{ post.author }}</b></p>
         </div>
         <p>-------------------</p>
