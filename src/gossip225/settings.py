@@ -132,3 +132,5 @@ AUTH_USER_MODEL = 'account.CustomUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+LOGOUT_REDIRECT_URL = "/account/login/"

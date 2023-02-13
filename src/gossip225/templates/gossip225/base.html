@@ -60,7 +60,7 @@
         </h1>
         <div class="right">
             User,
-            <h4><a href="{% url 'account:profile' %}"> {{ user.username.upper }} </a></h4>
+            <h4><a href="{% url 'account:profile' request.user.username %}"> {{ request.user.username.upper }} </a></h4>
             <a href="{% url 'post:create' %}">NOUVEAU POST</a> /
             <a href="{% url 'account:logout' %}">DECONNEXION</a>
         </div>

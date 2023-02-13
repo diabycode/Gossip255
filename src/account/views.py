@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
@@ -27,6 +27,8 @@ class SignUp(CreateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            if self.request.GET.get("next"):
+                return self.request.GET.get("next")
             return redirect("post:home")
 
         return super().get(request, *args, **kwargs)
@@ -38,16 +40,20 @@ class MyLoginView(LoginView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+            if self.request.GET.get("next"):
+                return redirect(self.request.GET.get("next"))
             return redirect("post:home")
 
         return super(MyLoginView, self).get(request, *args, **kwargs)
 
     def get_success_url(self):
+        if self.request.GET.get("next"):
+            return self.request.GET.get("next")
         return self.success_url
 
 
 class MyLogoutView(LogoutView):
-    next_page = reverse_lazy("account:login")
+    pass
 
 
 class Profile(LoginRequiredMixin, TemplateView):
@@ -55,8 +61,8 @@ class Profile(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user"] = self.request.user
-        context["posts"] = self.request.user.post_set.all().order_by("-create_on")
+        context["user"] = get_object_or_404(CustomUser, username=self.kwargs.get("username"))
+        context["posts"] = context["user"].post_set.all().order_by("-create_on")
 
         return context
 

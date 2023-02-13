@@ -1,7 +1,8 @@
 {% extends 'gossip225/base.html' %}
 
 {% block head_content %}
-     <title>Détails</title>
+    <title>Détails</title>
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
 {% endblock %}
 
 {% block body_container %}
@@ -10,5 +11,38 @@
     {% endif %}
     <p> {{ post.content }}</p>
     <h4> {{ post.author }}</h4>
+
+    <p >vote: <span id="vote_count"> {{ post.vote_count }} </span></p>
+    <form action="">
+        {% csrf_token %}
+        <button hx-post="{% url 'reactions:update_vote' post.pk %}"  hx-trigger="click" hx-target="#vote_count">
+            vote
+        </button>
+    </form>
+
+    <form method="POST" action="{% url 'reactions:comment' %}">
+        {% csrf_token %}
+        {{ form }}
+
+        <input type="hidden" name="post_pk" value="{{ post.pk }}">
+        <button hx-post="{% url 'reactions:comment' %}"  hx-trigger="click" hx-target="#comments" hx-swap="afterbegin">
+            Poster
+        </button>
+    </form>
+
+    <div id="comments">
+        {% for comment in comments %}
+            <div class="comment">
+                <p>{{comment.content }}</p>
+                <p>
+                    <a href="{% url 'account:profile' comment.author.username %}">{{ comment.author.username }}</a>
+                    <span> {{ comment.created_at }} </span>
+                </p>
+
+            </div>
+        {% endfor %}
+    </div>
+
+
 {% endblock %}
 

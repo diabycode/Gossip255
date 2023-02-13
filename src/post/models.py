@@ -1,8 +1,10 @@
 import django
 from django.db import models
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 from account.models import CustomUser
+from reactions.models import Vote
 
 
 class HashTag(models.Model):
@@ -17,6 +19,7 @@ class Post(models.Model):
     published = models.BooleanField(default=False)
     create_on = models.DateTimeField(default=timezone.now)
     edited = models.BooleanField(default=False)
+    vote_count = models.IntegerField(default=0)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -37,4 +40,29 @@ class Post(models.Model):
                     pass
 
             self.hashtags.set([HashTag.objects.get(name=h.name) for h in hashtags])
+
+    def update_vote(self, author):
+        """
+            Get or create a Vote model
+            if create:
+                - update vote count and save
+                return 1
+            else:
+                - delete Vote object
+                - update vote count and save
+                - return -1
+        """
+        vote_object, created = Vote.objects.get_or_create(user=author, post=self)
+        if created:
+            self.vote_count += 1
+            self.save()
+            return 1
+
+        vote_object.delete()
+        self.vote_count -= 1
+        self.save()
+        return -1
+
+
+
 

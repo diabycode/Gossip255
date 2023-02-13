@@ -2,17 +2,40 @@
 
 {% block head_content %}
      <title>Gossip225/Post</title>
+    <script src="https://unpkg.com/htmx.org@1.8.5"></script>
+
 {% endblock %}
 
 {% block body_container %}
     {% for post in posts %}
-        <div>
+        <div class="post">
+            <p><b>{{ post.author }}</b> - {{ post.create_on }} </p>
+            {% if post.author == request.user %}
+                <p>
+                    <a href="{% url 'post:edit' pk=post.pk %}">modifier</a>
+                    <a href="{% url 'post:delete' pk=post.pk %}" style="color: red;">supprimer</a>
+                </p>
+            {% endif %}
             {% if post.thumbnail %}
                 <img style="width: 280px; height: 280px; object-fit: cover;" src="{{ post.thumbnail.url }}" alt="Image rattaché">
             {% endif %}
+            <p> <span id="post_{{ post.id }}"> {{ post.vote_count }} </span> vote(s)</p>
+
             <p> {{ post.content }}</p>
-            <a href="{% url 'post:details' pk=post.pk %}">voir</a>
-            <p> {{ post.create_on }} <b>{{ post.author }}</b></p>
+            {% if post.comment_set.all %}
+                <p>
+                    <a href="{% url 'post:details' pk=post.pk %}"> voir les commentaires ({{ post.comment_set.all.count }}) </a>
+                </p>
+            {% endif %}
+            <form action="">
+                {% csrf_token %}
+                <button hx-post="{% url 'reactions:update_vote' post.pk %}"  hx-trigger="click" hx-target="#post_{{ post.id }}">
+                    vote
+                </button>
+            </form>
+
+<!--            <a href="{% url 'post:details' pk=post.pk %}">voir</a>-->
+
         </div>
         <p>-------------------</p>
     {% endfor %}
