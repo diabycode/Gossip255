@@ -3,6 +3,22 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
+from django.apps import apps
+
+
+class Stat:
+
+    def __init__(self, user: 'CustomUser'):
+        self.user = user
+
+    @property
+    def number_of_votes(self) -> int:
+        return apps.get_model("reactions", "Vote").objects.all().filter(user=self.user).count()
+
+    @property
+    def number_of_posts(self) -> int:
+        return apps.get_model("post", "Post").objects.all().filter(author=self.user).count()
+
 
 class CustomUserManager(BaseUserManager):
 
@@ -55,6 +71,10 @@ class CustomUser(AbstractBaseUser):
     USERNAME_FIELD = "username"
 
     objects = CustomUserManager()
+
+    @property
+    def stats(self):
+        return Stat(user=self)
 
     def has_perm(self, perm, obj=None):
         return True
