@@ -33,7 +33,7 @@
     <div id="comments">
         {% for comment in comments %}
             <div class="comment">
-                <p>{{comment.content }}</p>
+                <p>{{comment.content }} - <a href="{% url 'reactions:delete_comment' comment.pk %}" style="color: red;">delete</a></p>
                 <p>
                     <a href="{% url 'account:profile' comment.author.username %}">{{ comment.author.username }}</a>
                     <span> {{ comment.created_at }} </span>

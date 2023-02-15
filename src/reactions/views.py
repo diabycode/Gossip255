@@ -10,6 +10,16 @@ from .models import Comment, Vote
 
 
 @login_required()
+def delete_comment(request, comment_pk):
+    """
+        retreve and delete a comment
+    """
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    comment.delete()
+    return redirect("post:details", pk=comment.post.pk)
+
+
+@login_required()
 def create_comment(request):
     pk = request.POST.get("post_pk")
 
