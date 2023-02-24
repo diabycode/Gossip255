@@ -1,22 +1,38 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Se connecter</title>
+    <link rel="stylesheet" href="{% static 'css/account/login.css' %}">
+
 </head>
 <body>
-  <h1>Connexion</h1>
-  <form action="#" method="POST">
-    {% csrf_token %}
-    {% if errors %}
-      <p>{{ errors }}</p>
-    {% endif %}
+  
+  <div class="container">
+    <div class="left">
+      <div>
+        <h1>Gossip225</h1>
+        <p>Veuillez vous authenauthentifié et avoir accès .  vous authenauthentifié et avoir accès .</p>
+      
+      </div>
+     </div>
+    
+    <div class="right">
+      <form method="POST">
+        {% csrf_token %}
+  
+        <p>{{ form.username }}</p>
+        <p>{{ form.password }}</p>
+        <input type="submit" value="J'me connecte">
+      </form>
+  
+      <p>Vous ne disposez pas de compte ? <a href="{% url 'account:signup' %}">Incrivez-vous</a> !</p>
+  
+    </div>
 
-    {{ form.as_p }}
-    <input type="submit" value="J'me connecte">
-  </form>
-
-  <p>Vous ne disposez pas de compte ? <a href="{% url 'account:signup' %}">Incrivez-vous</a> !</p>
+  </div>
 
 </body>
 </html>

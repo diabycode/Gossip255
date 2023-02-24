@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'livereload',
+
     'account',
     'post',
     'reactions',
@@ -51,6 +53,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'livereload.middleware.LiveReloadScript',
+
 ]
 
 ROOT_URLCONF = 'gossip225.urls'
@@ -132,5 +137,11 @@ AUTH_USER_MODEL = 'account.CustomUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
+STATICFILES_DIRS = [
+    BASE_DIR / "gossip225" / "static",
+]
 
 LOGOUT_REDIRECT_URL = "/account/login/"

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -5,9 +7,35 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/account/login.css' %}">
+    
     <title>Créer un compte</title>
 </head>
 <body>
+    <div class="container">
+        <div class="left">
+          <div>
+            <h1>Gossip225</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste consequuntur deleniti, dignissimos expedita libero est!</p>
+            
+          </div>
+         </div>
+        
+        <div class="right">
+          <form action="#" method="POST">
+            {% csrf_token %}
+           
+            <p>{{ form.username }}</p>
+            <p>{{ form.password }}</p>
+            <input type="submit" value="Je m'inscris">
+          </form>
+          <p>Vous disposez déjà d'un compte ? <a href="{% url 'account:login' %}">Connectez-vous</a> !</p> 
+      
+        </div>
+    
+      </div>
+
+<!-- 
     <h1>Inscription</h1>
     <form action="#" method="POST">
         {% csrf_token %}
@@ -15,7 +43,7 @@
 
         <input type="submit" value="Je m'inscris">
     </form>
-    <p>Vous disposez déjà d'un compte ? <a href="{% url 'account:login' %}">Connectez-vous</a> !</p>
+    <p>Vous disposez déjà d'un compte ? <a href="{% url 'account:login' %}">Connectez-vous</a> !</p> -->
 
 </body>
 </html>

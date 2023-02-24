@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import urls
 
 
-from .forms import UserForm
+from .forms import UserAuthenticationForm, UserSignUpForm
 from .models import CustomUser
 
 
@@ -21,7 +21,7 @@ def signup_success(request):
 
 class SignUp(CreateView):
     model = CustomUser
-    form_class = UserForm
+    form_class = UserSignUpForm
     template_name = "account/signup.html"
     success_url = reverse_lazy("account:signup_success")
 
@@ -37,6 +37,7 @@ class SignUp(CreateView):
 class MyLoginView(LoginView):
     template_name = "account/login.html"
     success_url = reverse_lazy("post:home")
+    form_class = UserAuthenticationForm
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
