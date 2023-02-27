@@ -9,3 +9,12 @@ GossipU225 est un réseau social où tout le monde pourra se connecter avec un n
 ### Outils
 - Python/Django
 - SQLite DB
+
+
+### Fonctionnalités 
+- Gestion d'utilisateurs
+- Publié, modifier, supprimer un Post
+- Commentaires sur les Posts
+
+Et bien d'autres ...
+  
