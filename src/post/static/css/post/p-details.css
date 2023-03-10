@@ -1,0 +1,86 @@
+
+.post-container {
+    width: 50%;
+    min-width: 500px;
+}
+.page-container {
+    display: flex;
+    max-width: 1200px;
+    margin: auto;
+    flex-direction: column;
+    padding: 0px 30px;
+    align-items: center;
+}
+
+
+
+/* -- comments -- */
+.separator {
+    width: 100%;
+    height: 1px;
+    background-color: #2B3642;
+    margin: 50px auto;
+}
+
+/*  */
+#comments {
+    padding: 0px 30px;
+}
+#comments button {
+    background-color: #53687E;
+    padding: 10px 30px;
+    font-size: 18px;
+    color: #F5FBEF;
+    font-weight: 300;
+    font-family: "Open sans", sans-serif;
+}
+
+#comments form textarea::placeholder {
+    font-weight: 300;
+    font-family: "Open sans", sans-serif;
+    color: #2B3642;
+    opacity: .7;
+}
+#comments form textarea:focus {
+    border: .5px solid #53687E;
+}
+#comments form textarea {
+    resize: none;
+    background: #D8DCDF;
+    font-family: "Open sans", sans-serif;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 300;
+    color: #2B3642;
+    outline: none;
+    padding: 10px;
+    border: none;
+}
+
+.comments-list {
+    margin-top: 25px;
+}
+.comment {
+    margin-bottom: 10px;
+    background-color: #D8DCDF;
+    padding: 20px;
+}
+.comment div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.comment div {
+    margin-top: 10px;
+}
+
+.comment div a:hover {
+    text-decoration: underline;
+}
+.comment div p a {
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #2B3642;
+    margin-right: 20px;
+}

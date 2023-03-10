@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.defaults import page_not_found
@@ -8,6 +8,7 @@ from post.models import Post
 from reactions.forms import PostCommentForm
 from .models import Comment, Vote
 
+import json
 
 @login_required()
 def delete_comment(request, comment_pk):
@@ -21,29 +22,25 @@ def delete_comment(request, comment_pk):
 
 @login_required()
 def create_comment(request):
-    pk = request.POST.get("post_pk")
 
     if request.method == "POST":
+        data = json.loads(request.body)
+
         comment = Comment(
-            content=request.POST.get("content"),
+            content=data.get("content"),
             author=request.user,
-            post=Post.objects.get(pk=pk)
+            post=Post.objects.get(pk=data.get("post_id"))
         )
 
         comment.save()
 
-        response = f'''
-            <div class="comment">
-                <p>{comment.content}</p>
-                <p>
-                    <a href="/account/{comment.author.username}/">{comment.author.username}</a>
-                    <span> {comment.created_at} </span>
-                </p>
-    
-            </div>'''
-        return HttpResponse(response)
-        # return redirect(f"/post/{pk}/")
-
+        response = {
+            "pk": comment.pk,
+            "content": comment.content,
+            "author": comment.author.username,
+            "created_at": comment.created_at.strftime("%b %d %Y, %I:%M %p"),
+        }
+        return JsonResponse(response)
     return page_not_found()
 
 

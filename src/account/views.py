@@ -11,6 +11,7 @@ from django.contrib.auth import urls
 
 from .forms import UserAuthenticationForm, UserSignUpForm
 from .models import CustomUser
+from reactions.models import Vote, Comment
 
 
 def signup_success(request):
@@ -64,6 +65,12 @@ class Profile(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["user"] = get_object_or_404(CustomUser, username=self.kwargs.get("username"))
         context["posts"] = context["user"].post_set.all().order_by("-create_on")
+        
+        # stats: posts_count, tags_count, votes_count
+        context["posts_count"] = len(context["posts"])
+        context["votes_count"] = len(Vote.objects.filter(user=context["user"]))
+        context["comments_count"] = len(Comment.objects.filter(author=context["user"]))
+
 
         return context
 

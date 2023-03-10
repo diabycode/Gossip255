@@ -13,4 +13,10 @@ class PostForm(ModelForm):
             "thumbnail",
             "published",
         )
+        widgets = {
+            "content": forms.Textarea(attrs={
+                "placeholder": "De quoi voulez-vous parler ?",
+                "rows": "5",
+            })
+        }
 

@@ -1,16 +1,47 @@
 {% extends 'gossip225/base.html' %}
+{% load static %}
 
 {% block head_content %}
-     <title>Créer un post</title>
+    <title>Créer un post</title>
+    <link rel="stylesheet" href="{% static 'css/post/create_post.css' %}">
 {% endblock %}
 
 {% block body_container %}
-    <h1>Créer un nouveau post</h1>
-    <form action="#" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Créer">
-    </form>
+    <div class="body_content">
+
+        <div class="container">
+            <h1>Créer un nouveau post</h1>
+            <form action="#" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="post-content">
+                    <p>{{ form.content }}</p>
+
+                    <div id="image-selected-container">
+                    </div>
+                    <div class="image-input">
+                        <label for="id_thumbnail">
+                            <svg width="40" height="40" viewBox="0 0 336 318" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M280 61C280 57.2288 280 55.3431 278.828 54.1716C277.657 53 275.771 53 272 53H64C60.2288 53 58.3431 53 57.1716 54.1716C56 55.3431 56 57.2288 56 61V263C56 263.943 56 264.414 56.2929 264.707C56.5858 265 57.0572 265 58 265H272C275.771 265 277.657 265 278.828 263.828C280 262.657 280 260.771 280 257V61Z" stroke="#F5FBEF" stroke-width="8"/>
+                                <path d="M126 159L210 159" stroke="#F5FBEF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M168 119.25L168 198.75" stroke="#F5FBEF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Ajouter une photo</label>
+                        {{ form.thumbnail }}
+                    </div>
+                </div>
+    
+                <p>
+                    <label for="id_published"> Publier </label>{{ form.published }}
+                </p>
+                <input type="submit" value="Créer un post">
+            </form>
+    
+        </div>
+    </div>
+    <br>
+    <br>
+    <script type="module" src="{% static 'js/post/create_post.js' %}" defer></script>
+
 {% endblock %}
 
 

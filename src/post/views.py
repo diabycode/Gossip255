@@ -33,7 +33,7 @@ class EditPost(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = "post/edit_post.html"
     form_class = PostForm
-    success_url = reverse_lazy("account:profile")
+    # success_url = reverse_lazy("account:profile")
     context_object_name = "post"
 
     def dispatch(self, request, *args, **kwargs):
@@ -45,6 +45,9 @@ class EditPost(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.edited = True
         return super(EditPost, self).form_valid(form)
+    
+    def get_success_url(self):
+        return reverse("post:details", kwargs={"pk": self.kwargs.get("pk")})
 
 
 class PostDetails(LoginRequiredMixin, DetailView):
