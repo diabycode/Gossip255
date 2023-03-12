@@ -28,7 +28,7 @@ async function postComment(comment_content, postId) {
  * @param {Object} commentData
  */
 function addCommentToDOM(commentData) {
-    const commentStructure = document.querySelector(".comment").cloneNode(true)
+    const commentStructure = document.querySelector("#comment-template").content.cloneNode(true)
 
     commentStructure.querySelector("p").innerText = commentData.content
     commentStructure.querySelector("div > p a").innerText = commentData.author
@@ -39,8 +39,13 @@ function addCommentToDOM(commentData) {
     commentStructure.querySelector("div > a").setAttribute("href", commentDeleteUrl)
     commentStructure.querySelector("div > a").innerText = "Supprimer"
 
+    // add comment to conatiner
+    const container = document.createElement("div")
+    container.classList.add("comment")
+    container.appendChild(commentStructure)
+
     // add comment to DOM
-    document.querySelector(".comments-list").prepend(commentStructure)
+    document.querySelector(".comments-list").prepend(container)
 }
 
 console.log("ok")

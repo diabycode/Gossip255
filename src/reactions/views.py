@@ -45,13 +45,21 @@ def create_comment(request):
 
 
 @login_required()
-def update_vote(request, post_pk):
+def update_vote(request):
     if request.method == "POST":
-        post = get_object_or_404(Post, id=post_pk)
+        data = json.loads(request.body)
+
+        post = get_object_or_404(Post, id=data["post_id"])
         post.update_vote(author=request.user)
 
-        # return redirect('post:details', pk=post.id)
-        return HttpResponse(post.vote_count)
+        all_votes = Vote.objects.filter(post=post)
+
+        current_user_has_vote = False
+        if request.user in [vote.user for vote in all_votes]:
+            current_user_has_vote = True
+
+        return JsonResponse({"vote_count": post.get_vote_count(), 
+                             "current_user_has_vote": current_user_has_vote})
     return page_not_found()
 
 

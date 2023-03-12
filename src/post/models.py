@@ -19,7 +19,6 @@ class Post(models.Model):
     published = models.BooleanField(default=False)
     create_on = models.DateTimeField(default=timezone.now)
     edited = models.BooleanField(default=False)
-    vote_count = models.IntegerField(default=0)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -54,15 +53,11 @@ class Post(models.Model):
         """
         vote_object, created = Vote.objects.get_or_create(user=author, post=self)
         if created:
-            self.vote_count += 1
-            self.save()
             return 1
-
         vote_object.delete()
-        self.vote_count -= 1
-        self.save()
         return -1
 
-
+    def get_vote_count(self):
+        return Vote.objects.filter(post=self).count()
 
 

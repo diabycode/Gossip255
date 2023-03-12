@@ -1,9 +1,6 @@
 export const imgContainer = document.querySelector("#image-selected-container")
 const imgInput = document.querySelector("form input[type=file]") 
 
-if (imgInput.files[0]) {
-    console.log("ok")
-}
 
 export function clearPreview () {
     imgContainer.innerHTML = ""

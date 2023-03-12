@@ -22,18 +22,17 @@ function showImageAssociate (imgUrl) {
 
 }
 
+const imgInput = document.querySelector(".image-input").querySelector("input[type=file]")
+const imgInputLabel = document.querySelector(".image-input").querySelector("label[for=id_thumbnail]")
+const clearCheckBox = document.querySelector("#thumbnail-clear_id")
+
 // get image associated with the post
 const img = document.querySelector(".image-input a")
 if (img) {
     const imgUrl = img.getAttribute("href")
     showImageAssociate(imgUrl)
     document.querySelector(".image-input").style.display = "none"
-
 }
-
-const imgInput = document.querySelector(".image-input").querySelector("input[type=file]")
-const imgInputLabel = document.querySelector(".image-input").querySelector("label[for=id_thumbnail]")
-const clearCheckBox = document.querySelector("#thumbnail-clear_id")
 
 document.querySelector(".image-input").innerHTML = ""
 document.querySelector(".image-input").appendChild(imgInputLabel)

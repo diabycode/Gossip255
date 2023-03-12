@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.http import JsonResponse
 
 from django.views import View
 from django.views.defaults import page_not_found
@@ -9,6 +10,20 @@ from django.views.generic import CreateView, ListView, UpdateView, DetailView, D
 from reactions.forms import PostCommentForm
 from .forms import PostForm
 from .models import Post
+from reactions.models import Vote
+
+
+def get_user_vote_status(request, post_id):
+    post = Post.objects.get(pk=post_id)
+
+    all_votes = Vote.objects.filter(post=post)
+    has_vote = False
+    if request.user in [vote.user for vote in all_votes]:
+        has_vote = True
+    return JsonResponse({
+        "has_vote": has_vote,
+        "vote_count": post.get_vote_count()
+    })
 
 
 class PostHomeView(LoginRequiredMixin, ListView):

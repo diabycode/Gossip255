@@ -94,5 +94,7 @@ form button {
 .post {
     margin-bottom: 20px;
     background-color: #E9EBED;
+    padding-bottom: 15px;
+    box-shadow: 0px 0px 5px #00000024;
 }
 

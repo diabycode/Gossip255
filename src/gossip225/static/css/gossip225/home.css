@@ -58,3 +58,14 @@ div a:last-child {
     color: #2B3642;
     margin-left: 30px;
 }
+
+div.reaction > form > button > svg {
+    stroke: #11111B;
+    stroke-width: 8;
+    fill: none;
+}
+
+.user-has-voted {
+    fill: #53687E;
+}
+

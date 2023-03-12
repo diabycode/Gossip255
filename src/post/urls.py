@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import PostHomeView, CreatePost, EditPost, PostDetails, DeletePost
+from .views import *
 
 app_name = "post"
 
@@ -10,5 +10,6 @@ urlpatterns = [
     path('<str:pk>/', PostDetails.as_view(), name="details"),
     path('<str:pk>/edit/', EditPost.as_view(), name="edit"),
     path('<str:pk>/delete/', DeletePost.as_view(), name="delete"),
+    path("vote_status/<str:post_id>/", get_user_vote_status, name="vote_status"),
 ]
 
