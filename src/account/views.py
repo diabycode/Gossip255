@@ -7,6 +7,7 @@ from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
 from django.contrib.auth import urls
+from django.contrib.auth import login
 
 
 from .forms import UserAuthenticationForm, UserSignUpForm
@@ -34,6 +35,27 @@ class SignUp(CreateView):
 
         return super().get(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if self.request.GET.get("next"):
+                return self.request.GET.get("next")
+            return redirect("post:home")
+
+        form = self.get_form()
+        user = CustomUser()
+        user.username = form.data.get("username")
+        user.set_password(form.data.get("username"))
+
+        user.save()
+        login(self.request, user)
+        
+        if user.is_authenticated:
+            if self.request.GET.get("next"):
+                return self.request.GET.get("next")
+            return redirect("post:home")
+        
+        return self.form_invalid(form)
+
 
 class MyLoginView(LoginView):
     template_name = "account/login.html"
@@ -52,6 +74,22 @@ class MyLoginView(LoginView):
         if self.request.GET.get("next"):
             return self.request.GET.get("next")
         return self.success_url
+    
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if self.request.GET.get("next"):
+                return redirect(self.request.GET.get("next"))
+            return redirect("post:home")
+
+        form = self.get_form()
+        try:
+            user = CustomUser.objects.get(username=form.data.get("username"))
+        except CustomUser.DoesNotExist:
+            return self.form_invalid(form)
+        
+        login(self.request, user)
+        return redirect(self.get_success_url())
+
 
 
 class MyLogoutView(LogoutView):
